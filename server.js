@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
-    res.render('index', { weather: null, error: null })
+    res.render('index', { title: 'Weather App', weather: null, error: null })
 })
 
 app.post('/', function (req, res) {
@@ -29,14 +29,14 @@ app.post('/', function (req, res) {
     }
     request(url, function (err, response, body) {
         if (err) {
-            res.render('index', { weather: null, error: 'Error, please try again' });
+            res.render('index', { title: 'Weather App', weather: null, error: 'Error, please try again' });
         } else {
             let weather = JSON.parse(body)
             if (weather.main == undefined) {
-                res.render('index', { weather: null, error: 'Error, please try again' })
+                res.render('index', { title: 'Weather App', weather: null, error: 'Error, please try again' })
             } else {
                 let weatherText = `It's ${weather.main.temp} degrees in ${weather.name}!`
-                res.render('index', { weather: weatherText, error: null })
+                res.render('index', { title: weather.name, weather: weatherText, error: null })
             }
         }
     })
